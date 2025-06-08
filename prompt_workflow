@@ -1,0 +1,20 @@
+Here is the prompt and needed information for genertaing a list of potential analysis on top of ideas I already have 
+
+
+File Name(s): 
+
+What is the data about?: 
+
+Variables of Interest: 
+
+Cleaned or Raw?: 
+
+Initial Research Questions: 
+- ADD HERE, add any directions if curious
+
+"Here is a new dataset I’m working on. I’ve included metadata, cleaning notes, and a list of research questions. Based on this, please:
+Prioritize the top 3 analyses that will yield the most actionable or surprising insights
+Explain why each is important and how it supports decision-making
+Generate working Python code (with visualizations) to perform each analysis
+Give me a short summary I can use for data storytelling, insure there is code for data visualizations to deliver to stakeholders and to provide in my analysis"
+
