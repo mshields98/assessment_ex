@@ -1,0 +1,123 @@
+# ------------------------------------------
+# 🔍 EDA + Data Cleaning Template for CSVs
+# ------------------------------------------
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ========== 1. LOAD DATA ==========
+# Load CSV file(s)
+file_path = 'your_file.csv'  # Replace with your actual file path
+df = pd.read_csv(file_path)
+
+# Optional: for multi-dataset workflows
+# df2 = pd.read_csv('another_file.csv')
+
+
+# ========== 2. STRUCTURE & TYPES ==========
+print("\n📋 Dataset Overview:")
+print("Shape:", df.shape)
+print("Column Data Types:")
+print(df.dtypes)
+
+print("\n🔍 First 30 Rows:")
+print(df.head(30))
+
+#Here is a good place to note what things are and make general note about obvious cleaning needed (like looking at date and seeing its not coded in as a date type) 
+# ========== 3. MISSING DATA ==========
+print("\n🕳️ Missing Values:")
+missing_summary = pd.DataFrame({
+    'null_count': df.isnull().sum(),
+    'null_percent': df.isnull().mean() * 100
+})
+missing_summary = missing_summary[missing_summary['null_count'] > 0]
+print(missing_summary.sort_values(by='null_count', ascending=False))
+
+##Determine what to do with the missing values and make notes 
+
+# ========== 4. UNIQUE VALUE COUNTS ==========
+print("\n🔁 Unique Value Counts:")
+for col in df.columns:
+    print(f"{col}: {df[col].nunique()} unique values")
+
+
+for col in df.columns:
+    print(f"\n🔹 Value Counts for Column: {col}")
+    try:
+        print(df[col].value_counts(dropna=False).head(20))  # Show top 20 most frequent values
+    except Exception as e:
+        print(f"Could not compute value counts for {col}: {e}")
+
+
+# ========== 5. SUGGESTED CLEANING & TRANSFORMATIONS ==========
+# Example: Convert date columns
+for col in df.columns:
+    if 'date' in col.lower():
+        df[col] = pd.to_datetime(df[col], errors='coerce')
+
+# Parse date parts if applicable
+date_cols = [col for col in df.columns if pd.api.types.is_datetime64_any_dtype(df[col])]
+for col in date_cols:
+    df[f'{col}_year'] = df[col].dt.year
+    df[f'{col}_month'] = df[col].dt.month
+    df[f'{col}_day'] = df[col].dt.day
+    df[f'{col}_weekday'] = df[col].dt.day_name()
+
+
+#NULL HANDLING
+# Option 1: Remove rows with any nulls
+# df = df.dropna()
+
+# Option 2: Remove rows with nulls in specific columns
+# df = df.dropna(subset=['column_1', 'column_2'])
+
+# Option 3: Fill nulls with default or imputed values
+# df['col'] = df['col'].fillna('Unknown')
+# df['numeric_col'] = df['numeric_col'].fillna(df['numeric_col'].mean())
+
+# Example: Strip whitespace for object columns
+df = df.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
+
+#Example: Rename any unclear columns as needed 
+df.rename(columns = {'old name': 'new name'}, inplace = true
+
+
+
+#Example: Create any transformations that make sense 
+#Possible examples 
+#    - Date difference 
+#    - Averages 
+#    - Counts 
+#    - ID level or group level aggregations. 
+
+
+# ========== 6. DESCRIPTIVE STATS ==========
+print("\n📈 Descriptive Statistics (Numeric):")
+print(df.describe())
+
+print("\n📊 Descriptive Statistics (Categorical):")
+cat_cols = df.select_dtypes(include='object').columns
+print(df[cat_cols].describe())
+
+
+# ========== 7. OPTIONAL: MODE, STD DEV, RANGE ==========
+spread_df = pd.DataFrame({
+    'mean': df.select_dtypes(include=np.number).mean(),
+    'median': df.select_dtypes(include=np.number).median(),
+    'mode': df.select_dtypes(include=np.number).mode().iloc[0],
+    'std_dev': df.select_dtypes(include=np.number).std(),
+    'range': df.select_dtypes(include=np.number).max() - df.select_dtypes(include=np.number).min()
+})
+
+print("\n📐 Spread Summary:")
+print(spread_df)
+
+
+# ========== 8. CLEANED DF FOR ANALYSIS ==========
+# You can now use this DataFrame:
+# df_cleaned = df.dropna(subset=[...]) or df[df['column'].notnull()]
+# Save or continue analysis:
+# df_cleaned.to_csv('cleaned_output.csv', index=False)
+
+print("\n✅ Data inspection and cleaning complete. Ready for analysis.")
