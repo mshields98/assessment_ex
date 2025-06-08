@@ -1,0 +1,29 @@
+This is a template for a write up 
+
+
+Workflow Process: 
+- Ingest data
+- View data and determine assumptions
+- Verbally describe the data 
+- Determine missing or messy data 
+- Clean data as needed
+- Generate RQ's and Hypotheses 
+- Run Analysis 
+- Report 
+
+
+Data Description and Handling:
+##Here is where you will describe what the data records are, what you discovered about the data structure and info (like values) document any assumptions you are making about the data. Describe any data cleaning and clearly describe the data sets that are being used.]
+
+Research Questions and Hypotheses: 
+#Here you will list out ways you could explore the data and relevant questions that go with it. 
+## Example: 
+What are the most common call response topics? 
+Are there any trends by time? Is there a difference between time? Do we see more of a particular topic in one year, month or day? What might this suggest?
+When do X records occur what is the time frame of the data set. What can this tell us 
+
+
+Key Insights and Suggestions: 
+- Top Insight: Describe how this can be used and might be relevant for the stakeholder to action on
+EX: High time to close for trash complaints: This data suggests that there are many days between the open and close of tickets around X. An intervention to improve the response time here might be impactful in over all metrics. It is suggested that X infomation is gathered to better understand the need an duse case for this. 
+
